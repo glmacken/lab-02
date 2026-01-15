@@ -1,7 +1,7 @@
 package com.example.listycity;
 
 /**
- * This class represents a City
+ * This class represents a City -- TODO
  * There are functions to ... I'll figure it out later
  */
 public class City {
@@ -9,7 +9,7 @@ public class City {
 
     private String name;
 
-    // Constructors
+    // Constructor
 
     /**
      * Creates a City object

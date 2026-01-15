@@ -1,5 +1,6 @@
 package com.example.listycity;
 
+
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
@@ -28,13 +29,14 @@ public class MainActivity extends AppCompatActivity {
     private RelativeLayout bottomBar; // the bar where users enter city names
     private ArrayAdapter<String> cityAdapter;
     private ArrayList<String> dataList;
+    private int selectedElement = -1; // Selected list element
 
     /**
      * Main entry point
      *
      * @param savedInstanceState If the activity is being re-initialized after
-     *     previously being shut down then this Bundle contains the data it most
-     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,31 +58,21 @@ public class MainActivity extends AppCompatActivity {
         // Link Adapter to list
         cityAdapter = new ArrayAdapter<>(this, R.layout.content, dataList); // link dataList to content.xml
         cityList.setAdapter(cityAdapter);
-        setUpListViewListener(); // So that the list can be clicked on
 
         // Make the buttons do stuff with onClickListeners
 
         addCityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Code to add city
+                // Makes bottomBar visible so user can enter city name
                 bottomBar.setVisibility(VISIBLE);
-
-
-                // Test
-                CharSequence text = "This Works!";
-                Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
             }
         });
 
         removeCityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Code to remove city
-
-                // Test
-                CharSequence text = "This Works!";
-                Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
+                removeCity();
             }
         });
 
@@ -88,47 +80,59 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Code to confirm city name after typing
-                addCity(v);
+                addCity();
                 bottomBar.setVisibility(GONE);
             }
         });
 
+        cityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Code to select city item
+                selectedElement = position;
+
+                // Test
+                String text = String.format("Selected %s", cityAdapter.getItem(selectedElement));
+                Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
+
+    /**
+     * Removes selected city from cityList.
+     */
+    private void removeCity() {
+        if (selectedElement != -1) { // Some City is selected
+            cityAdapter.remove(cityAdapter.getItem(selectedElement));
+            String text = String.format("Deleted %s", cityAdapter.getItem(selectedElement - 1));
+            Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
+            selectedElement = -1; // Deselect city
+
+        } else { // No City is selected
+            String text = "Please select a city...";
+            Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // Functions
 
     /**
      * Adds city to cityList
      *
      * taken from <a href="https://www.youtube.com/watch?v=i9mkAoZ8FNk">...</a>. I'll cite good later.
      */
-    private void addCity(View view) {
+    private void addCity() {
         // Collect user input
-        EditText input =  findViewById(R.id.editText);
+        EditText input = findViewById(R.id.editText);
         String cityName = input.getText().toString();
 
-        // Check if text box is empty
-        if(!(cityName.isEmpty())){
+        if (!(cityName.isEmpty())) { // User entered a value
             cityAdapter.add(cityName);
             input.setText("");
-        }
-        else {
-            CharSequence text = "Please type in a city name...";
+        } else { // Text box is empty
+            String text = "Please type in a city name...";
             Toast.makeText(MainActivity.this, text, Toast.LENGTH_LONG).show();
         }
-    }
-
-    /**
-     * Allows List items from cityList to be clicked on
-     */
-    private void setUpListViewListener() {
-        cityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Code to select city item
-
-                // Test
-                CharSequence text = "This Works!";
-                Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }

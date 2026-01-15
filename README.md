@@ -25,10 +25,14 @@ https://developer.android.com/develop/ui/views/layout/relative -> Layout stuff i
 https://developer.android.com/guide/topics/ui/notifiers/toasts -> for testing buttons in MainActivity.java
 https://developer.android.com/reference/android/widget/AdapterView.OnItemClickListener -> for letting the list listen to clicks
 https://developer.android.com/reference/android/view/View#setVisibility(int)
+https://developer.android.com/develop/ui/views/theming/shadows-clipping
+
+Java(Oracle) docs
+https://docs.oracle.com/javase/8/docs/api/java/lang/String.html
 
 Youtube:
 https://www.youtube.com/watch?v=9eTK8ZOBJsQ -> Layout stuff in activity_main
-https://www.youtube.com/watch?v=i9mkAoZ8FNk -> For help with making the buttons do stuff
+https://www.youtube.com/watch?v=i9mkAoZ8FNk -> For help implimenting the Add City feature and formatting
 https://www.youtube.com/watch?v=_2HmTXCJBDM
 
 ## Verbal Collaboration

@@ -9,9 +9,6 @@
 
 List any resources used here, or simply put `N/A` if not applicable.
 
-the git outline said to include all sources of information...
-I'll cite it properly later
-
 Geeks for Geeks:
 https://www.geeksforgeeks.org/android/android-listview-in-java-with-example/
 https://www.geeksforgeeks.org/android/button-in-kotlin/ -> Used in MainActivity.java to make buttons work

@@ -27,16 +27,16 @@ public class MainActivity extends AppCompatActivity {
     private Button removeCityButton;
     private Button confirmCityButton;
     private RelativeLayout bottomBar; // the bar where users enter city names
-    private ArrayAdapter<String> cityAdapter;
-    private ArrayList<String> dataList;
+    private ArrayAdapter<City> cityAdapter;
+    private ArrayList<City> dataList;
     private int selectedElement = -1; // Selected list element
 
     /**
      * Main entry point
      *
      * @param savedInstanceState If the activity is being re-initialized after
-     *                           previously being shut down then this Bundle contains the data it most
-     *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     * previously being shut down then this Bundle contains the data it most
+     * recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         bottomBar = findViewById(R.id.bottom_bar);
 
         // Set up list data
-        String[] cities = {"Edmonton", "Regina", "Toronto", "Red Deer", "Airdrie", "Cold Lake"};
+        City[] cities = {new City("Edmonton")};
         dataList = new ArrayList<>();
         dataList.addAll(Arrays.asList(cities));
 
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 selectedElement = position;
 
                 // Test
-                String text = String.format("Selected %s", cityAdapter.getItem(selectedElement));
+                String text = String.format("Selected %s", cityAdapter.getItem(selectedElement).getName());
                 Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
             }
         });
@@ -104,8 +104,9 @@ public class MainActivity extends AppCompatActivity {
      */
     private void removeCity() {
         if (selectedElement != -1) { // Some City is selected
+            String text = String.format("Deleted %s", cityAdapter.getItem(selectedElement).getName());
             cityAdapter.remove(cityAdapter.getItem(selectedElement));
-            String text = String.format("Deleted %s", cityAdapter.getItem(selectedElement - 1));
+
             Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
             selectedElement = -1; // Deselect city
 
@@ -119,16 +120,17 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Adds city to cityList
-     *
-     * taken from <a href="https://www.youtube.com/watch?v=i9mkAoZ8FNk">...</a>. I'll cite good later.
+     * taken from Ben O'Brien at <a href="https://www.youtube.com/watch?v=i9mkAoZ8FNk">...</a>.
      */
     private void addCity() {
         // Collect user input
         EditText input = findViewById(R.id.editText);
         String cityName = input.getText().toString();
+        City city;
 
         if (!(cityName.isEmpty())) { // User entered a value
-            cityAdapter.add(cityName);
+            city = new City(cityName);
+            cityAdapter.add(city);
             input.setText("");
         } else { // Text box is empty
             String text = "Please type in a city name...";

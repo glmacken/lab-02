@@ -1,8 +1,7 @@
 package com.example.listycity;
 
 /**
- * This class represents a City -- TODO
- * There are functions to ... I'll figure it out later
+ * This class represents a City
  */
 public class City {
     // Attribs
@@ -10,6 +9,13 @@ public class City {
     private String name;
 
     // Constructor
+
+    /**
+     * Default constructor for City class
+     */
+    public City() {
+        this.name = "";
+    }
 
     /**
      * Creates a City object
@@ -28,5 +34,12 @@ public class City {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    // Functions
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

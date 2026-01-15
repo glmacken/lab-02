@@ -2,8 +2,10 @@ package com.example.listycity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -15,11 +17,12 @@ import java.util.Arrays;
 public class MainActivity extends AppCompatActivity {
 
     // Declare reference vars
-    ListView cityList;
-    Button addCityButton;
-    Button removeCityButton;
-    ArrayAdapter<String> cityAdapter;
-    ArrayList<String> dataList;
+    private ListView cityList;
+    private Button addCityButton;
+    private Button removeCityButton;
+    private Button confirmCityButton;
+    private ArrayAdapter<String> cityAdapter;
+    private ArrayList<String> dataList;
 
     /**
      * Main entry point
@@ -37,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         cityList = findViewById(R.id.city_list);
         addCityButton = findViewById(R.id.add_city);
         removeCityButton = findViewById(R.id.remove_city);
+        confirmCityButton = findViewById(R.id.confirm_city);
 
         // Set up list data
         String[] cities = {"Edmonton", "Regina", "Toronto", "Red Deer", "Airdrie", "Cold Lake"};
@@ -46,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         // Link Adapter to list
         cityAdapter = new ArrayAdapter<>(this, R.layout.content, dataList); // link dataList to content.xml
         cityList.setAdapter(cityAdapter);
+        setUpListViewListener(); // So that the list can be clicked on
 
         // Make the buttons do stuff with onClickListeners
 
@@ -53,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Code to add city
+
 
                 // Test
                 CharSequence text = "This Works!";
@@ -71,5 +77,54 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        confirmCityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Code to confirm city name after typing
+                addCity(v);
+
+                // Test
+                CharSequence text = "This Works!";
+                Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    /**
+     * Adds city to cityList
+     *
+     * taken from <a href="https://www.youtube.com/watch?v=i9mkAoZ8FNk">...</a>. I'll cite good later.
+     */
+    private void addCity(View view) {
+        // Collect user input
+        EditText input =  findViewById(R.id.editText);
+        String cityName = input.getText().toString();
+
+        // Check if text box is empty
+        if(!(cityName.isEmpty())){
+            cityAdapter.add(cityName);
+            input.setText("");
+        }
+        else {
+            CharSequence text = "Please type in a city name...";
+            Toast.makeText(MainActivity.this, text, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    /**
+     * Allows List items from cityList to be clicked on
+     */
+    private void setUpListViewListener() {
+        cityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Code to select city item
+
+                // Test
+                CharSequence text = "This Works!";
+                Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

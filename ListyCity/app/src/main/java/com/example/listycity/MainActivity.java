@@ -1,5 +1,8 @@
 package com.example.listycity;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -7,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private Button addCityButton;
     private Button removeCityButton;
     private Button confirmCityButton;
+    private RelativeLayout bottomBar; // the bar where users enter city names
     private ArrayAdapter<String> cityAdapter;
     private ArrayList<String> dataList;
 
@@ -41,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         addCityButton = findViewById(R.id.add_city);
         removeCityButton = findViewById(R.id.remove_city);
         confirmCityButton = findViewById(R.id.confirm_city);
+        bottomBar = findViewById(R.id.bottom_bar);
 
         // Set up list data
         String[] cities = {"Edmonton", "Regina", "Toronto", "Red Deer", "Airdrie", "Cold Lake"};
@@ -58,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Code to add city
+                bottomBar.setVisibility(VISIBLE);
 
 
                 // Test
@@ -82,10 +89,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Code to confirm city name after typing
                 addCity(v);
-
-                // Test
-                CharSequence text = "This Works!";
-                Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
+                bottomBar.setVisibility(GONE);
             }
         });
 
